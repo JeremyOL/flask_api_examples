@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template
+from flask import Flask, url_for, request, render_template, abort, redirect
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -8,6 +8,13 @@ app = Flask(__name__)
 def index():
     return "<p>Index Page</p>"
 
+@app.route("/abort")
+def abort401():
+    abort(401)
+
+@app.route("/login/")
+def bad_login():
+    return redirect(url_for('abort401'))
 
 @app.route("/hello")
 def hello_world():
